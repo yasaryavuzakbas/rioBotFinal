@@ -83,7 +83,6 @@ for(let i =1;i<rows.data.sheets[0].data[0].rowData.length;i++){
     }
 
 }
-console.log(data)
  return data
 }
 client.config = require('./config');
@@ -92,7 +91,7 @@ let startDays=[]
 const now=new Date()
 const day= now.getDate()
 const month=now.getMonth()+1
-const year= now.getFullYear() 
+const year= now.getFullYear()
 
 client.on("ready", async msg => {
     const channel= client.channels.cache.get("908693709393113091")
@@ -103,7 +102,7 @@ client.on("ready", async msg => {
             (item.birthDay.split('/')[0]==('0'+month.toString()) || item.birthDay.split('/')[0]==(month.toString())) &&
             (item.birthDay.split('/')[1]==('0'+day.toString()) || item.birthDay.split('/')[1]==(day.toString())) 
         ){
-            console.log('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter');
+            // console.log('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter');
             channel.send('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter')
         }
         
@@ -111,7 +110,7 @@ client.on("ready", async msg => {
             (item.startDay.split('/')[0]==('0'+month.toString()) || item.startDay.split('/')[0]==(month.toString())) &&
             (item.startDay.split('/')[1]==('0'+day.toString()) || item.startDay.split('/')[1]==(day.toString())) 
         ){
-            console.log(item.name +' ile birlikte geçen ' +(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
+            // console.log(item.name +' ile birlikte geçen ' +(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
             channel.send(item.name +' ile birlikte geçen '+(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
         }
     })
