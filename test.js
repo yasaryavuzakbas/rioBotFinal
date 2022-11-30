@@ -13,14 +13,6 @@ global.client = new Client({
     ]
     // disableMentions: 'everyone',
 });
-
-
-const channelId='960438439461937152'
-const spreadsheetId='1If0-bcs3dlXeuBZT4mpOjNOD02Kh9WkeG4aVQTpFipI'
-const roleId='951139177754394654'
-
-
-
 client.config = require('./config');
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 
@@ -32,7 +24,7 @@ async function loadSavedCredentialsIfExist() {
   try {
     const content = await fs.readFile(TOKEN_PATH);
     const credentials = JSON.parse(content);
-    // console.log('credentialLoad', new Date());
+    console.log('credentialLoad', new Date());
     return google.auth.fromJSON(credentials);
 
   } catch (err) {
@@ -52,11 +44,11 @@ async function saveCredentials(client) {
     refresh_token: client.credentials.refresh_token,
   });
   await fs.writeFile(TOKEN_PATH, payload);
-  // console.log('credentialSave', new Date());
+  console.log('credentialSave', new Date());
 }
 
 async function authorize() {
-// console.log('authorize', new Date())
+console.log('authorize', new Date())
 
   let client = await loadSavedCredentialsIfExist();
   if (client) {
@@ -77,7 +69,7 @@ async function listMajors(auth) {
     let data=[]
   const sheets = google.sheets({version: 'v4', auth});
   const res = await sheets.spreadsheets.get({
-    spreadsheetId: spreadsheetId,
+    spreadsheetId: '1If0-bcs3dlXeuBZT4mpOjNOD02Kh9WkeG4aVQTpFipI',
     ranges: 'Sayfa1!A1:E50',
     includeGridData:true
   });
@@ -113,39 +105,33 @@ const month=now.getMonth()+1
 const year= now.getFullYear()
 
 client.on("ready", async msg => {
-// console.log('ready')
+console.log('ready')
 
-    const channel= client.channels.cache.get(channelId)
+    const channel= client.channels.cache.get("908693709393113091")
     let table=await authorize().then(listMajors).catch(console.error);
-    // console.log('table', new Date()) 
+    table.push({name:"yavuz", birthDay: "10/30/2021",  startDay: "10/30/2021"})
+    console.log('table', new Date()) 
     table.map(item =>{
         if(
             (item.birthDay.split('/')[0]==('0'+month.toString()) || item.birthDay.split('/')[0]==(month.toString())) &&
             (item.birthDay.split('/')[1]==('0'+day.toString()) || item.birthDay.split('/')[1]==(day.toString())) 
         ){
-            // console.log('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter');
-            channel.send('Mutlu yıllar ' + item.name+`! Nice yaşlara :) <@&${roleId}>`)
+            console.log('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter');
+            channel.send('Mutlu yıllar ' + item.name+'! Nice yaşlara :) @Retter')
         }
         
         if(
             (item.startDay.split('/')[0]==('0'+month.toString()) || item.startDay.split('/')[0]==(month.toString())) &&
             (item.startDay.split('/')[1]==('0'+day.toString()) || item.startDay.split('/')[1]==(day.toString())) 
         ){
-            // console.log(item.name +' ile birlikte geçen ' +(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
-            channel.send(item.name +' ile birlikte geçen '+(year-item.startDay.split('/')[2].toString()) +` harika yıl! <@&${roleId}>`)
+            console.log(item.name +' ile birlikte geçen ' +(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
+            channel.send(item.name +' ile birlikte geçen '+(year-item.startDay.split('/')[2].toString()) +' harika yıl!')
         }
     })
   }
   )
 
   
-  function main(){
+
     client.login(client.config.token);
-    // console.log('login', new Date())
-    
-  }
   
-  exports.handler =  (event) => {
-    // console.log('main', new Date());
-  main ()
-  }
