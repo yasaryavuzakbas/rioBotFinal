@@ -85,7 +85,7 @@ for(let i =1;i<rows.data.sheets[0].data[0].rowData.length;i++){
 }
  return data
 }
-client.config = require('./config');
+client.config = require('./configs');
 let birthdays=[]
 let startDays=[]
 const now=new Date()
