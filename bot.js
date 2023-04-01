@@ -14,6 +14,7 @@ global.client = new Client({
 client.config = require('./config');
 
 client.on("ready", async msg => {
+    console.log('Logged in');
     const channel= client.channels.cache.get("908693709393113091")
     
   })
